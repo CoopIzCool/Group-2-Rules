@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
-    #region
+    #region Fields
     private float _runSpeed = 5f;
     private float _jumpPower = 5f;
     private float _horizontalInput;
@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     private Transform groundCheck;
     [SerializeField]
     private LayerMask groundLayer;
-    #endregion
+    #endregion Fields
 
     // Update is called once per frame
     void Update()
@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale.y, transform.localScale.z);
     }
 
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }
