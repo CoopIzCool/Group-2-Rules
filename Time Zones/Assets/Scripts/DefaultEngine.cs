@@ -9,7 +9,7 @@ public class DefaultEngine : MonoBehaviour
     private EngineActivationRange _activationRange;
     
     #endregion Fields
-    private void Update()
+    protected virtual void Update()
     {
         if(_activationRange.isPlayerActivating && Input.GetKeyDown(KeyCode.E))
         {
@@ -18,7 +18,7 @@ public class DefaultEngine : MonoBehaviour
     }
     public virtual void ActivateEngine()
     {
-
+        Debug.Log("Activated " + gameObject.name);
     }
 
 }

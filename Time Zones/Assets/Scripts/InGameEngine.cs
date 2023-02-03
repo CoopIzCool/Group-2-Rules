@@ -4,9 +4,19 @@ using UnityEngine;
 
 public class InGameEngine : DefaultEngine
 {
+    #region Fields
+    [SerializeField]
+    private LevelManager _levelManager;
+    #endregion
 
+    protected override void Update()
+    {
+        base.Update();
+    }
     public override void ActivateEngine()
     {
-        
+        base.ActivateEngine();
+        Debug.Log("But now its fancy");
+        _levelManager.SwitchWorldLayer();
     }
 }

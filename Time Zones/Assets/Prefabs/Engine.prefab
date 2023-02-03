@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3093615897715248621}
   - component: {fileID: 3164882701733710278}
   - component: {fileID: 8774524697931408485}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ GameObject:
   - component: {fileID: 4558341604106318298}
   - component: {fileID: 2028883116683587459}
   - component: {fileID: 3545148806658902395}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Engine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
