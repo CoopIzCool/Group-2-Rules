@@ -11,6 +11,7 @@ public class DefaultEngine : MonoBehaviour
     #endregion Fields
     protected virtual void Update()
     {
+        //Activate the portal only if the player is on top of it and they are grounded
         if(_activationRange.isPlayerActivating && Input.GetKeyDown(KeyCode.E))
         {
             ActivateEngine();

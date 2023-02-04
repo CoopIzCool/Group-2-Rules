@@ -10,9 +10,18 @@ public class EngineActivationRange : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        //if player is within range
         if(collision.tag == "Player")
         {
-            isPlayerActivating = true;
+            //and they are grounded
+            if(collision.gameObject.GetComponent<PlayerMovement>().IsGrounded())
+            {
+                isPlayerActivating = true;
+            }
+            else
+            {
+                isPlayerActivating = false;
+            }
         }
     }
 

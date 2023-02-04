@@ -12,7 +12,6 @@ public class MainMenuEngine : DefaultEngine
     // Update is called once per frame
     protected override void Update()
     {
-        //Debug.Log("uhhh");
         base.Update();
     }
 
@@ -20,6 +19,7 @@ public class MainMenuEngine : DefaultEngine
     {
         base.ActivateEngine();
         Debug.Log("Going to " + _sceneName);
+        //Go to the level selected in the inspector
         SceneManager.LoadScene(_sceneName);
     }
 }

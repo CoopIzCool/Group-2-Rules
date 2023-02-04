@@ -17,6 +17,7 @@ public class InGameEngine : DefaultEngine
     {
         base.ActivateEngine();
         Debug.Log("But now its fancy");
+        //Switch to the other level layer
         _levelManager.SwitchWorldLayer();
     }
 }
