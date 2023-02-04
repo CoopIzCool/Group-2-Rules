@@ -23,8 +23,10 @@ public class LevelManager : MonoBehaviour
         
     }
 
+    //Switches which world the player is in
     public void SwitchWorldLayer()
     {
+        
         _layerOneActive = !_layerOneActive;
         if(_layerOneActive)
         {

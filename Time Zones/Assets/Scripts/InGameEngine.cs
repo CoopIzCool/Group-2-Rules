@@ -13,8 +13,10 @@ public class InGameEngine : DefaultEngine
     {
         base.Update();
     }
+
     public override void ActivateEngine()
     {
+        //comments can be deleted later on
         base.ActivateEngine();
         Debug.Log("But now its fancy");
         //Switch to the other level layer
