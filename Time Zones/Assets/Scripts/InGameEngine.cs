@@ -5,8 +5,6 @@ using UnityEngine;
 public class InGameEngine : DefaultEngine
 {
     #region Fields
-    [SerializeField]
-    private LevelManager _levelManager;
     #endregion
 
     protected override void Update()
@@ -20,6 +18,6 @@ public class InGameEngine : DefaultEngine
         base.ActivateEngine();
         Debug.Log("But now its fancy");
         //Switch to the other level layer
-        _levelManager.SwitchWorldLayer();
+        LevelManager.Instance.SwitchWorldLayer();
     }
 }

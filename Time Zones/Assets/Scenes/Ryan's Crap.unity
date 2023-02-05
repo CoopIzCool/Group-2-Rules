@@ -134,9 +134,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainMenuEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 2076803146474447108, guid: ff04e73019239c64ab6abdae0c940035, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 7470321602723184662, guid: ff04e73019239c64ab6abdae0c940035, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7470321602723184662, guid: ff04e73019239c64ab6abdae0c940035, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1381,7 +1385,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9039317145978493235, guid: c80a884bdfa754c4b8b65341c40278da, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9039317145978493235, guid: c80a884bdfa754c4b8b65341c40278da, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1786,6 +1790,10 @@ PrefabInstance:
     - target: {fileID: 9035608750023127119, guid: b1b539f157874d24cb590a30e2f7b604, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9035608750023127155, guid: b1b539f157874d24cb590a30e2f7b604, type: 3}
+      propertyPath: hazardLayer.m_Bits
+      value: 32768
       objectReference: {fileID: 0}
     - target: {fileID: 9035608750023127156, guid: b1b539f157874d24cb590a30e2f7b604, type: 3}
       propertyPath: m_Name

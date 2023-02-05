@@ -17,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
     private Transform groundCheck;
     [SerializeField]
     private LayerMask groundLayer;
+    [SerializeField]
+    private LayerMask hazardLayer;
     #endregion Fields
 
     // Update is called once per frame
@@ -42,6 +44,11 @@ public class PlayerMovement : MonoBehaviour
         {
             FlipSides();
         }
+
+        if(HitHazard())
+        {
+            PlayerDeath();
+        }
     }
 
     private void FixedUpdate()
@@ -59,5 +66,15 @@ public class PlayerMovement : MonoBehaviour
     public bool IsGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+    }
+
+    public bool HitHazard()
+    {
+        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, hazardLayer);
+    }
+
+    private void PlayerDeath()
+    {
+        LevelManager.Instance.RestartLevel();
     }
 }
