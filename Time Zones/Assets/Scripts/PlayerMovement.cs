@@ -19,6 +19,8 @@ public class PlayerMovement : MonoBehaviour
     private LayerMask groundLayer;
     [SerializeField]
     private LayerMask hazardLayer;
+    [SerializeField]
+    private Animator zamanAnimator;
     #endregion Fields
 
     // Update is called once per frame
@@ -26,7 +28,24 @@ public class PlayerMovement : MonoBehaviour
     {
         _horizontalInput = Input.GetAxisRaw("Horizontal");
 
-        if((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && IsGrounded())
+        Vector2 zamanVelocity = GetComponent<Rigidbody2D>().velocity;
+        if (zamanVelocity.y > 0)
+        {
+            zamanAnimator.SetBool("isGrounded", false);
+            zamanAnimator.SetBool("upwardVelocity", true);
+        }
+        else if (IsGrounded())
+        {
+            zamanAnimator.SetBool("isGrounded", true);
+            zamanAnimator.SetBool("upwardVelocity", false);
+        }
+
+       if(_horizontalInput!=0)
+            zamanAnimator.SetBool("isRunning", true);
+       else
+            zamanAnimator.SetBool("isRunning", false);
+
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && IsGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, _jumpPower);
         }

@@ -22,7 +22,7 @@ public class FurnaceFly : MonoBehaviour
 
     void Start()
     {
-        if(target == null)
+        
         target = GameObject.FindGameObjectWithTag("Player");
         projectileSpawnLocation = gameObject.transform.GetChild(0).transform;
         upperBound = transform.Find("UpperBound").position.y;

@@ -9,6 +9,14 @@ public class MainMenuEngine : DefaultEngine
     [SerializeField]
     private string _sceneName;
     #endregion Fields
+    public enum ButtonType
+    {
+        PLAY,
+        QUIT,
+        SETTINGS
+    };
+
+    public ButtonType bType;
     // Update is called once per frame
     protected override void Update()
     {
@@ -17,9 +25,23 @@ public class MainMenuEngine : DefaultEngine
 
     public override void ActivateEngine()
     {
-        base.ActivateEngine();
-        Debug.Log("Going to " + _sceneName);
-        //Go to the level selected in the inspector
-        SceneManager.LoadScene(_sceneName);
+        switch(bType)
+        {
+            case ButtonType.PLAY:
+                base.ActivateEngine();
+                Debug.Log("Going to " + _sceneName);
+                //Go to the level selected in the inspector
+                SceneManager.LoadScene(_sceneName);
+                break;
+            case ButtonType.QUIT:
+                Application.Quit(0);
+                break;
+            case ButtonType.SETTINGS:
+                break;
+            default:
+                break;
+        }
+        
+
     }
 }
