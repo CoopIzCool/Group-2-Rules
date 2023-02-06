@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     private float _jumpPower = 20f;
     private float _horizontalInput;
     private bool _facingRight;
+    [SerializeField]
+    private int health = 1;
 
     [SerializeField]
     private Rigidbody2D rb;
@@ -90,6 +92,15 @@ public class PlayerMovement : MonoBehaviour
     public bool HitHazard()
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, hazardLayer);
+    }
+
+    public void PlayerDamaged()
+    {
+        health--;
+        if(health <= 0)
+        {
+            PlayerDeath();
+        }
     }
 
     private void PlayerDeath()
