@@ -931,12 +931,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8fdd16133c721b4eb840cc714c343d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7.23
+  speed: 4
   attackCooldown: 4
   target: {fileID: 0}
   projectile: {fileID: 2005077038958641498, guid: 9cc62ef4204c6d845813dd6e7792225b, type: 3}
-  projectileSpeed: 5
-  aggroRange: 0
+  projectileSpeed: 4
+  aggroRange: 7
 --- !u!61 &296151555
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1582,7 +1582,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 443762009}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -18.6, z: 0}
+  m_LocalPosition: {x: 0, y: -6.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1607,7 +1607,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &493446393
 Transform:
   m_ObjectHideFlags: 0
@@ -5422,7 +5422,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 942102008}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 13.4, z: 0}
+  m_LocalPosition: {x: 0, y: 24.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5453,7 +5453,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1069974302}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -18.6, z: 0}
+  m_LocalPosition: {x: 0, y: -2.77, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5796,7 +5796,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1141368535}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -18.6, z: 0}
+  m_LocalPosition: {x: 0, y: -6.27, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5853,12 +5853,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8fdd16133c721b4eb840cc714c343d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7.23
+  speed: 4
   attackCooldown: 4
   target: {fileID: 0}
   projectile: {fileID: 2005077038958641498, guid: 9cc62ef4204c6d845813dd6e7792225b, type: 3}
-  projectileSpeed: 5
-  aggroRange: 0
+  projectileSpeed: 4
+  aggroRange: 7
 --- !u!61 &1155410587
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5982,7 +5982,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1183707962}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 13.4, z: 0}
+  m_LocalPosition: {x: 0.2, y: 21.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7895,12 +7895,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8fdd16133c721b4eb840cc714c343d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7.23
+  speed: 4
   attackCooldown: 4
   target: {fileID: 0}
   projectile: {fileID: 2005077038958641498, guid: 9cc62ef4204c6d845813dd6e7792225b, type: 3}
-  projectileSpeed: 5
-  aggroRange: 0
+  projectileSpeed: 4
+  aggroRange: 7
 --- !u!61 &1627286707
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8533,7 +8533,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1943680394}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 13.4, z: 0}
+  m_LocalPosition: {x: 0, y: 36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13568,7 +13568,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3403561405481463783}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 13.4, z: 0}
+  m_LocalPosition: {x: 0, y: 19.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13630,7 +13630,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3403561405690528828}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -18.6, z: 0}
+  m_LocalPosition: {x: 0, y: -0.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13669,12 +13669,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8fdd16133c721b4eb840cc714c343d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7.23
+  speed: 4
   attackCooldown: 4
   target: {fileID: 0}
   projectile: {fileID: 2005077038958641498, guid: 9cc62ef4204c6d845813dd6e7792225b, type: 3}
-  projectileSpeed: 5
-  aggroRange: 0
+  projectileSpeed: 4
+  aggroRange: 7
 --- !u!212 &3403561406278121927
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -44,7 +44,7 @@ public class FurnaceFly : MonoBehaviour
         //Using update frames to run the cooldown of the projectile attack
         if (localAttackCooldown > 0)
             localAttackCooldown -= Time.deltaTime;
-        else   //Launch projectile
+        else if(Vector2.Distance(target.transform.position,transform.position)<= aggroRange)   //Launch projectile
         {
             projectileClone = Instantiate(projectile, projectileSpawnLocation.position, transform.rotation, projectileContainer.transform);
             localAttackCooldown = attackCooldown;
