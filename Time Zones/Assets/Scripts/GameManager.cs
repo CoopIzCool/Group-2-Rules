@@ -110,13 +110,20 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.PLAY:
                 playerScript.Updatee();
-                foreach (GameObject coldSnapper in coldSnappers)
+
+                if(inLavaLevel)
                 {
-                    coldSnapper.GetComponent<ColdSnapper>().Updatee();
+                    foreach (GameObject furnaceFly in furnaceFlies)
+                    {
+                        furnaceFly.GetComponent<FurnaceFly>().Updatee();
+                    }    
                 }
-                foreach (GameObject furnaceFly in furnaceFlies)
+                else
                 {
-                    furnaceFly.GetComponent<FurnaceFly>().Updatee();
+                    foreach (GameObject coldSnapper in coldSnappers)
+                    {
+                        coldSnapper.GetComponent<ColdSnapper>().Updatee();
+                    }
                 }
                 break;
             case GameState.PAUSE:
@@ -132,9 +139,12 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.PLAY:
                 playerScript.FixedUpdatee();
-                foreach (GameObject coldSnapper in coldSnappers)
+                if(!inLavaLevel)
                 {
-                    coldSnapper.GetComponent<ColdSnapper>().FixedUpdatee();
+                    foreach (GameObject coldSnapper in coldSnappers)
+                    {
+                        coldSnapper.GetComponent<ColdSnapper>().FixedUpdatee();
+                    }
                 }
                 break;
             case GameState.PAUSE:
