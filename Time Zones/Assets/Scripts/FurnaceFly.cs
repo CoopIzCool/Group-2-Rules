@@ -20,20 +20,21 @@ public class FurnaceFly : MonoBehaviour
     private float lowerBound; //Adjustable child object to determine how far down the furnaceFly goes
     private Rigidbody2D projectileRGB; //Reference to be used to store the rigidbody component of the projectile when it is spawned.
 
-    void Start()
+    private GameObject projectileContainer;
+    void Awake()
     {
         
         target = GameObject.FindGameObjectWithTag("Player");
         projectileSpawnLocation = gameObject.transform.GetChild(0).transform;
         upperBound = transform.Find("UpperBound").position.y;
         lowerBound = transform.Find("LowerBound").position.y;
+
+        projectileContainer = GameObject.Find("Projectiles");
     }
 
     
-    void Update()
+    public void Updatee()
     {
-        
-
         //Flipping furnacefly according to where the target is
         if (target.transform.position.x < transform.position.x)
             transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
@@ -45,14 +46,14 @@ public class FurnaceFly : MonoBehaviour
             localAttackCooldown -= Time.deltaTime;
         else   //Launch projectile
         {
-            projectileClone = GameObject.Instantiate(projectile, projectileSpawnLocation.position, transform.rotation);
+            projectileClone = Instantiate(projectile, projectileSpawnLocation.position, transform.rotation, projectileContainer.transform);
             localAttackCooldown = attackCooldown;
-            Debug.Log("This is the rigidbody velocity" + projectileClone.GetComponent<Rigidbody2D>().velocity);
+            //Debug.Log("This is the rigidbody velocity" + projectileClone.GetComponent<Rigidbody2D>().velocity);
             projectileRGB = projectileClone.GetComponent<Rigidbody2D>();
             projectileRGB.velocity = (target.transform.position - transform.position).normalized * projectileSpeed;
             float angle = Mathf.Atan2(projectileRGB.velocity.y, projectileRGB.velocity.x) * Mathf.Rad2Deg;
             projectileClone.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            Debug.Log("Cooldown Reset");
+            //Debug.Log("Cooldown Reset");
         }
 
         //Simple state system to switch between upward and downward motion

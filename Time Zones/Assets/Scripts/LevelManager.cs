@@ -32,17 +32,6 @@ public class LevelManager : MonoBehaviour
             return instance;
         }
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     //Switches which world the player is in
     public void SwitchWorldLayer()

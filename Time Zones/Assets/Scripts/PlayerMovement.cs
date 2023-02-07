@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     #endregion Fields
 
     // Update is called once per frame
-    void Update()
+    public void Updatee()
     {
         _horizontalInput = Input.GetAxisRaw("Horizontal");
 
@@ -72,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    public void FixedUpdatee()
     {
         rb.velocity = new Vector2(_horizontalInput * _runSpeed, rb.velocity.y);
     }
@@ -106,5 +107,14 @@ public class PlayerMovement : MonoBehaviour
     private void PlayerDeath()
     {
         LevelManager.Instance.RestartLevel();
+    }
+
+    internal void TeleportTo(Transform transform)
+    {
+        this.transform.position = transform.position + Vector3.up * 0.5f;
+    }
+    internal void Kill()
+    {
+        GameManager.Restart();
     }
 }
