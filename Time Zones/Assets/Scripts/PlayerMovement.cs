@@ -100,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
         health--;
         if(health <= 0)
         {
-            PlayerDeath();
+            Kill();
         }
     }
 
