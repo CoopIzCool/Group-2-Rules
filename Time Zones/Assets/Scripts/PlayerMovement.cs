@@ -113,6 +113,10 @@ public class PlayerMovement : MonoBehaviour
     {
         this.transform.position = transform.position + Vector3.up * 0.5f;
     }
+    internal void TeleportTo(Vector3 position)
+    {
+        this.transform.position = position + Vector3.up * 0.5f;
+    }
     internal void Kill()
     {
         GameManager.Restart();

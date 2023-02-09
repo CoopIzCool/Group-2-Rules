@@ -14,8 +14,8 @@ public class GameManager : MonoBehaviour
     }
     private static GameState state;
     private static GameManager instance;
-    private GameObject player;
     private static PlayerMovement playerScript;
+    private static Vector3 menuPos;
     //private static UIManager ui;
     private static GameObject spawnEngine;
 
@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
     private GameObject[] coldSnappers;
     public GameObject furnaceFliesContainer;
     private GameObject[] furnaceFlies;
+
+    // UI
+    public static GameObject pauseMenu;
 
     public static GameManager Instance
     {
@@ -57,11 +60,12 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        player = GameObject.FindGameObjectWithTag("Player");
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player)
         {
             playerScript = player.GetComponent<PlayerMovement>();
         }
+        menuPos = new Vector3(8.0f, 0.0f, 0.0f);
         //enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
         // Get levels
@@ -93,9 +97,11 @@ public class GameManager : MonoBehaviour
             furnaceFlies[i] = furnaceFliesContainer.transform.GetChild(i).gameObject;
         }
 
+        pauseMenu = GameObject.Find("PauseMenu");
+        pauseMenu.SetActive(false);
+
         state = GameState.MAIN_MENU;
     }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -178,15 +184,17 @@ public class GameManager : MonoBehaviour
         inLavaLevel = true;
         state = GameState.PLAY;
     }
-    private void PausePlay()
+    private static void PausePlay()
     {
         if(state == GameState.PLAY)
         {
             state = GameState.PAUSE;
+            pauseMenu.SetActive(true);
         }
         else if(state == GameState.PAUSE)
         {
             state = GameState.PLAY;
+            pauseMenu.SetActive(false);
         }
 
         //Time.timeScale = 0.0f; // Older jank method
@@ -198,6 +206,20 @@ public class GameManager : MonoBehaviour
         levels[0].SetActive(false);
         levels[1].SetActive(true);
         levels[2].SetActive(false);
+        pauseMenu.SetActive(false);
         inLavaLevel = true;
+    }
+    public static void Resume()
+    {
+        PausePlay();
+    }
+    public static void ToMenu()
+    {
+        levels[0].SetActive(true);
+        levels[1].SetActive(false);
+        pauseMenu.SetActive(false);
+        playerScript.TeleportTo(menuPos);
+        inLavaLevel = false;
+        state = GameState.MAIN_MENU;
     }
 }
