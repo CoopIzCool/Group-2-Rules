@@ -36,14 +36,21 @@ public class PlayerMovement : MonoBehaviour
         {
             zamanAnimator.SetBool("isGrounded", false);
             zamanAnimator.SetBool("upwardVelocity", true);
+            zamanAnimator.SetBool("downwardVel", false);
         }
         else if (IsGrounded())
         {
             zamanAnimator.SetBool("isGrounded", true);
             zamanAnimator.SetBool("upwardVelocity", false);
+            zamanAnimator.SetBool("downwardVel", false);
+        }
+        else
+        {
+            zamanAnimator.SetBool("isGrounded", false);
+            zamanAnimator.SetBool("downwardVel", true);
         }
 
-       if(_horizontalInput!=0)
+       if(_horizontalInput!=0 && zamanAnimator.GetBool("isGrounded"))
             zamanAnimator.SetBool("isRunning", true);
        else
             zamanAnimator.SetBool("isRunning", false);
