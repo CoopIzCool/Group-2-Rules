@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
-public class ColdSnapper : MonoBehaviour
+public class ColdSnapper : EnemyBehavior
 {
     public enum CSType
     {
@@ -130,12 +130,19 @@ public class ColdSnapper : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected override void OnCollisionEnter2D(Collision2D collision)
     {
-        GameObject obj = collision.gameObject;
-        if (obj.CompareTag("Player"))
-        {
-            obj.GetComponent<PlayerMovement>().Kill();
-        }
+        base.OnCollisionEnter2D(collision);
+    }
+
+    protected override void EnemyDeath()
+    {
+        base.EnemyDeath();
+        gameObject.SetActive(false);
+    }
+
+    protected override void HurtPlayer(GameObject Player)
+    {
+        base.HurtPlayer(Player);
     }
 }
