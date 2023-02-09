@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DefaultEngine : MonoBehaviour
+public class Engine : MonoBehaviour
 {
     public enum EngineType
     {
         DEFAULT,
-        TRANSMITTER,
-        RECIEVER,
         WIN,
         PLAY,
         SETTINGS,
@@ -29,7 +27,7 @@ public class DefaultEngine : MonoBehaviour
         {
             switch (type)
             {
-                case EngineType.TRANSMITTER:
+                case EngineType.DEFAULT:
                     //Debug.Log("Activated " + gameObject.name); // Debug
                     //Activate the portal only if the player is on top of it and they are grounded
                     if (connectedEngine)
