@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
 
     #region Fields
     private float _runSpeed = 5f;
-    private float _jumpPower = 20f;
+    private float _jumpPower = 13f;
     private float _horizontalInput;
     private bool _facingRight;
     [SerializeField]
