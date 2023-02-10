@@ -8,7 +8,8 @@ public class PlayerMovement : MonoBehaviour
 
     #region Fields
     private float _runSpeed = 5f;
-    private float _jumpPower = 13f;
+    private float _jumpPower = 13.5f;
+    private float _bouncePower = 6f;
     private float _horizontalInput;
     private bool _facingRight;
     [SerializeField]
@@ -102,6 +103,11 @@ public class PlayerMovement : MonoBehaviour
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, hazardLayer);
     }
 
+    public void HitEnemy()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, _bouncePower);
+    }
+
     public void PlayerDamaged()
     {
         health--;
@@ -128,4 +134,6 @@ public class PlayerMovement : MonoBehaviour
     {
         GameManager.Restart();
     }
+
+
 }

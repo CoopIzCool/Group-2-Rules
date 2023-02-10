@@ -9,27 +9,28 @@ public class EnemyBehavior : MonoBehaviour
         
         if(collision.gameObject.tag == "Player")
         {
-            Debug.Log("Is player");
             Collider2D playerCollider = collision.collider;
 
             Vector3 contactPoint = collision.GetContact(0).point;
-            Vector3 playerCenter = playerCollider.bounds.center;
+            Vector3 enemyBounds = gameObject.GetComponent<Collider2D>().bounds.max;
+            Vector3 playerBounds = playerCollider.bounds.min;
 
-            if(contactPoint.y - playerCenter.y  < -0.7f)
+            Debug.Log(enemyBounds.y - (playerBounds.y + 0.05));
+            if(playerBounds.y + 0.05 > enemyBounds.y)
             {
-                EnemyDeath();
+                EnemyDeath(collision.gameObject);
             }
             else
             {
                 HurtPlayer(collision.gameObject);
             }
-
+            
         }
     }
 
-    protected virtual void EnemyDeath()
+    protected virtual void EnemyDeath(GameObject Player)
     {
-
+        Player.GetComponent<PlayerMovement>().HitEnemy();
     }
 
     protected virtual void HurtPlayer(GameObject Player)

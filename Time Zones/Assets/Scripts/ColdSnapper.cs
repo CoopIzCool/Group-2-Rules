@@ -135,9 +135,9 @@ public class ColdSnapper : EnemyBehavior
         base.OnCollisionEnter2D(collision);
     }
 
-    protected override void EnemyDeath()
+    protected override void EnemyDeath(GameObject Player)
     {
-        base.EnemyDeath();
+        base.EnemyDeath(Player);
         gameObject.SetActive(false);
     }
 
