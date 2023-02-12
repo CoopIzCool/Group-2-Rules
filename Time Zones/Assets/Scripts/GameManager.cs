@@ -121,6 +121,7 @@ public class GameManager : MonoBehaviour
                 {
                     foreach (GameObject furnaceFly in furnaceFlies)
                     {
+                        if(furnaceFly.activeInHierarchy)
                         furnaceFly.GetComponent<FurnaceFly>().Updatee();
                     }    
                 }
@@ -128,6 +129,7 @@ public class GameManager : MonoBehaviour
                 {
                     foreach (GameObject coldSnapper in coldSnappers)
                     {
+                        if(coldSnapper.activeInHierarchy)
                         coldSnapper.GetComponent<ColdSnapper>().Updatee();
                     }
                 }
@@ -190,11 +192,13 @@ public class GameManager : MonoBehaviour
         {
             state = GameState.PAUSE;
             pauseMenu.SetActive(true);
+            playerScript.gameObject.GetComponent<Animator>().speed = 0;
         }
         else if(state == GameState.PAUSE)
         {
             state = GameState.PLAY;
             pauseMenu.SetActive(false);
+            playerScript.gameObject.GetComponent<Animator>().speed = 1;
         }
 
         //Time.timeScale = 0.0f; // Older jank method
@@ -208,6 +212,7 @@ public class GameManager : MonoBehaviour
         levels[2].SetActive(false);
         pauseMenu.SetActive(false);
         inLavaLevel = true;
+        Camera.main.transform.position = playerScript.gameObject.transform.position;
     }
     public static void Resume()
     {

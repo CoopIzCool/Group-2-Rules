@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FurnaceFly : MonoBehaviour
+public class FurnaceFly : EnemyBehavior
 {
     
     public float speed; //Speed of vertical motion of the furnaceFly
@@ -72,5 +72,15 @@ public class FurnaceFly : MonoBehaviour
             else
                 movingUp = !movingUp;
         }
+    }
+    protected override void OnCollisionEnter2D(Collision2D collision)
+    {
+        base.OnCollisionEnter2D(collision);
+    }
+
+    protected override void EnemyDeath(GameObject Player)
+    {
+        base.EnemyDeath(Player);
+        gameObject.SetActive(false);
     }
 }
