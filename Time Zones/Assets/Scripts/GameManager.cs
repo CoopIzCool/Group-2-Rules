@@ -23,9 +23,9 @@ public class GameManager : MonoBehaviour
     public GameObject levelsContainer;
     private static GameObject[] levels;
     public GameObject coldSnappersContainer;
-    private GameObject[] coldSnappers;
+    private static GameObject[] coldSnappers;
     public GameObject furnaceFliesContainer;
-    private GameObject[] furnaceFlies;
+    private static GameObject[] furnaceFlies;
 
     // UI
     public static GameObject pauseMenu;
@@ -212,6 +212,7 @@ public class GameManager : MonoBehaviour
         levels[2].SetActive(false);
         pauseMenu.SetActive(false);
         inLavaLevel = true;
+        ResetEnemies();
         Camera.main.transform.position = playerScript.gameObject.transform.position;
     }
     public static void Resume()
@@ -226,5 +227,19 @@ public class GameManager : MonoBehaviour
         playerScript.TeleportTo(menuPos);
         inLavaLevel = false;
         state = GameState.MAIN_MENU;
+    }
+
+    public static void ResetEnemies()
+    {
+        Debug.Log("resetting");
+        foreach(GameObject snapper in coldSnappers)
+        {
+            snapper.SetActive(true);
+        }
+
+        foreach(GameObject fly in furnaceFlies)
+        {
+            fly.SetActive(true);
+        }
     }
 }
