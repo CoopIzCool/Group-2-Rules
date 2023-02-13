@@ -76,6 +76,7 @@ public class ColdSnapper : EnemyBehavior
 
     public void Updatee()
     {
+        Debug.Log(IsGrounded + "is the grounding value for " + name);
         if (debug)
         {
             Debug.DrawRay((Vector2)transform.position + spriteBottomLocal, Vector3.down * groundedTolerance, Color.red);

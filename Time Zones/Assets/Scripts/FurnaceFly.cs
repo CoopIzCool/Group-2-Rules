@@ -46,13 +46,7 @@ public class FurnaceFly : EnemyBehavior
             localAttackCooldown -= Time.deltaTime;
         else if(Vector2.Distance(target.transform.position,transform.position)<= aggroRange)   //Launch projectile
         {
-            projectileClone = Instantiate(projectile, projectileSpawnLocation.position, transform.rotation, projectileContainer.transform);
-            localAttackCooldown = attackCooldown;
-            //Debug.Log("This is the rigidbody velocity" + projectileClone.GetComponent<Rigidbody2D>().velocity);
-            projectileRGB = projectileClone.GetComponent<Rigidbody2D>();
-            projectileRGB.velocity = (target.transform.position - transform.position).normalized * projectileSpeed;
-            float angle = Mathf.Atan2(projectileRGB.velocity.y, projectileRGB.velocity.x) * Mathf.Rad2Deg;
-            projectileClone.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            GetComponent<Animator>().SetBool("Attack", true);
             //Debug.Log("Cooldown Reset");
         }
 
@@ -82,5 +76,17 @@ public class FurnaceFly : EnemyBehavior
     {
         base.EnemyDeath(Player);
         gameObject.SetActive(false);
+    }
+
+    void FireProjectile()
+    {
+        projectileClone = Instantiate(projectile, projectileSpawnLocation.position, transform.rotation, projectileContainer.transform);
+        localAttackCooldown = attackCooldown;
+        //Debug.Log("This is the rigidbody velocity" + projectileClone.GetComponent<Rigidbody2D>().velocity);
+        projectileRGB = projectileClone.GetComponent<Rigidbody2D>();
+        projectileRGB.velocity = (target.transform.position - transform.position).normalized * projectileSpeed;
+        float angle = Mathf.Atan2(projectileRGB.velocity.y, projectileRGB.velocity.x) * Mathf.Rad2Deg;
+        projectileClone.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        GetComponent<Animator>().SetBool("Attack", false);
     }
 }
