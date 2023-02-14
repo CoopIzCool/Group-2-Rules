@@ -8,7 +8,8 @@ public class PlayerMovement : MonoBehaviour
 
     #region Fields
     private float _runSpeed = 5f;
-    private float _jumpPower = 20f;
+    private float _jumpPower = 13.5f;
+    //private float _bouncePower = 13.5f;
     private float _horizontalInput;
     private bool _facingRight;
     [SerializeField]
@@ -36,14 +37,21 @@ public class PlayerMovement : MonoBehaviour
         {
             zamanAnimator.SetBool("isGrounded", false);
             zamanAnimator.SetBool("upwardVelocity", true);
+            zamanAnimator.SetBool("downwardVel", false);
         }
         else if (IsGrounded())
         {
             zamanAnimator.SetBool("isGrounded", true);
             zamanAnimator.SetBool("upwardVelocity", false);
+            zamanAnimator.SetBool("downwardVel", false);
+        }
+        else
+        {
+            zamanAnimator.SetBool("isGrounded", false);
+            zamanAnimator.SetBool("downwardVel", true);
         }
 
-       if(_horizontalInput!=0)
+       if(_horizontalInput!=0 && zamanAnimator.GetBool("isGrounded"))
             zamanAnimator.SetBool("isRunning", true);
        else
             zamanAnimator.SetBool("isRunning", false);
@@ -95,12 +103,17 @@ public class PlayerMovement : MonoBehaviour
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, hazardLayer);
     }
 
+    public void HitEnemy()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, _jumpPower);
+    }
+
     public void PlayerDamaged()
     {
         health--;
         if(health <= 0)
         {
-            PlayerDeath();
+            Kill();
         }
     }
 
@@ -111,10 +124,16 @@ public class PlayerMovement : MonoBehaviour
 
     internal void TeleportTo(Transform transform)
     {
-        this.transform.position = transform.position + Vector3.up * 0.5f;
+        this.transform.position = transform.position + Vector3.up * 0.2f;
+    }
+    internal void TeleportTo(Vector3 position)
+    {
+        this.transform.position = position + Vector3.up * 0.5f;
     }
     internal void Kill()
     {
         GameManager.Restart();
     }
+
+
 }

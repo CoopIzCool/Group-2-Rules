@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2528712341932779447}
   - component: {fileID: 2528712341932779442}
   - component: {fileID: 2528712341932779443}
+  - component: {fileID: 1653491332441629388}
   m_Layer: 10
   m_Name: Cold Snapper Rev1
   m_TagString: Enemy
@@ -99,6 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6efe477abd7bcf741afa8e6150aee00b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   debug: 0
 --- !u!50 &2528712341932779442
 Rigidbody2D:
@@ -147,3 +149,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!95 &1653491332441629388
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2528712341932779446}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 004f673828598774eb38e5eb7aae073a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

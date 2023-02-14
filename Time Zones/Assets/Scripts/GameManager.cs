@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,18 +15,22 @@ public class GameManager : MonoBehaviour
     }
     private static GameState state;
     private static GameManager instance;
-    private GameObject player;
     private static PlayerMovement playerScript;
+    private static Vector3 menuPos;
     //private static UIManager ui;
-    private static GameObject spawnEngine;
+    private static GameObject spawn;
+    private static GameObject mainCamera;
 
     private static bool inLavaLevel = false;
     public GameObject levelsContainer;
     private static GameObject[] levels;
     public GameObject coldSnappersContainer;
-    private GameObject[] coldSnappers;
+    private static GameObject[] coldSnappers;
     public GameObject furnaceFliesContainer;
-    private GameObject[] furnaceFlies;
+    private static GameObject[] furnaceFlies;
+
+    // UI
+    public static GameObject pauseMenu;
 
     public static GameManager Instance
     {
@@ -57,11 +62,15 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        player = GameObject.FindGameObjectWithTag("Player");
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        spawn = GameObject.FindGameObjectWithTag("Spawn");
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
         if (player)
         {
             playerScript = player.GetComponent<PlayerMovement>();
         }
+        menuPos = new Vector3(8.0f, 0.0f, 0.0f);
         //enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
         // Get levels
@@ -70,10 +79,6 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < lChildCount; i++)
         {
             levels[i] = levelsContainer.transform.GetChild(i).gameObject;
-            if (i == 1)
-            {
-                spawnEngine = levels[1].transform.GetChild(1).gameObject; // Get Spawn
-            }
             if (i > 0) { levels[i].SetActive(false); } // Start with menu
         }
 
@@ -93,9 +98,11 @@ public class GameManager : MonoBehaviour
             furnaceFlies[i] = furnaceFliesContainer.transform.GetChild(i).gameObject;
         }
 
+        pauseMenu = GameObject.Find("PauseMenu");
+        pauseMenu.SetActive(false);
+
         state = GameState.MAIN_MENU;
     }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -115,6 +122,7 @@ public class GameManager : MonoBehaviour
                 {
                     foreach (GameObject furnaceFly in furnaceFlies)
                     {
+                        if(furnaceFly.activeInHierarchy)
                         furnaceFly.GetComponent<FurnaceFly>().Updatee();
                     }    
                 }
@@ -122,6 +130,7 @@ public class GameManager : MonoBehaviour
                 {
                     foreach (GameObject coldSnapper in coldSnappers)
                     {
+                        if(coldSnapper.activeInHierarchy)
                         coldSnapper.GetComponent<ColdSnapper>().Updatee();
                     }
                 }
@@ -174,19 +183,24 @@ public class GameManager : MonoBehaviour
     {
         levels[0].SetActive(false);
         levels[1].SetActive(true);
-        playerScript.TeleportTo(spawnEngine.transform);
+        playerScript.TeleportTo(spawn.transform);
+        MoveCamera(spawn.transform);
         inLavaLevel = true;
         state = GameState.PLAY;
     }
-    private void PausePlay()
+    private static void PausePlay()
     {
         if(state == GameState.PLAY)
         {
             state = GameState.PAUSE;
+            pauseMenu.SetActive(true);
+            playerScript.gameObject.GetComponent<Animator>().speed = 0;
         }
         else if(state == GameState.PAUSE)
         {
             state = GameState.PLAY;
+            pauseMenu.SetActive(false);
+            playerScript.gameObject.GetComponent<Animator>().speed = 1;
         }
 
         //Time.timeScale = 0.0f; // Older jank method
@@ -194,10 +208,50 @@ public class GameManager : MonoBehaviour
     public static void Restart()
     {
         //SceneManager.LoadScene(SceneManager.GetActiveScene().name); // THis will restart the whole scene from menu
-        playerScript.TeleportTo(spawnEngine.transform);
+        playerScript.TeleportTo(spawn.transform);
+        MoveCamera(spawn.transform);
         levels[0].SetActive(false);
         levels[1].SetActive(true);
         levels[2].SetActive(false);
+        pauseMenu.SetActive(false);
         inLavaLevel = true;
+        ResetEnemies();
+        //Camera.main.transform.position = playerScript.gameObject.transform.position;
     }
+    public static void Resume()
+    {
+        PausePlay();
+    }
+    public static void ToMenu()
+    {
+        levels[0].SetActive(true);
+        levels[1].SetActive(false);
+        pauseMenu.SetActive(false);
+        mainCamera.transform.position = menuPos;
+        playerScript.TeleportTo(menuPos);
+        inLavaLevel = false;
+        state = GameState.MAIN_MENU;
+    }
+
+    public static void ResetEnemies()
+    {
+        Debug.Log("resetting");
+        foreach(GameObject snapper in coldSnappers)
+        {
+            snapper.SetActive(true);
+        }
+
+        foreach(GameObject fly in furnaceFlies)
+        {
+            fly.SetActive(true);
+        }
+    }
+
+    internal static void MoveCamera(Transform transform)
+    {
+        Vector3 move = transform.position;
+        move.y += 0.5f;
+        mainCamera.transform.position = move;
+    }
+
 }
