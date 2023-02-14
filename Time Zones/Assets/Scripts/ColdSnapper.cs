@@ -14,15 +14,19 @@ public class ColdSnapper : EnemyBehavior
     public bool debug = false;
     private EnemyState state = EnemyState.INIT;
     private Rigidbody2D rigidBody;
-    private float speed = 0.4f;
+    private float speed = 1.6f;
     private Vector2 velocity;
     private Vector2 spriteBottomLocal;
     private LayerMask groundLayer;
+    [SerializeField]
+    private LayerMask wallLayer;
 
     private const float groundedTolerance = 0.75f;
     private const float edgeTolerance = 0.75f; // Distance that is considered an edge/cliff
     private const float wallTolerance = 0.2f; // Distance too a wall/object
-    private Vector2 rayOffset = new Vector3(0.6f, 0f);
+    private Vector2 rayOffset = new Vector3(0.8f, 0f);
+    private Vector2 leftRayOffset = new Vector2(1.1f, 0f);
+    private Vector2 groundOffset = new Vector3(0f, 0.3f);
 
     //public GameObject target;
 
@@ -30,7 +34,7 @@ public class ColdSnapper : EnemyBehavior
     {
         get
         {
-            RaycastHit2D underObject = Physics2D.Raycast((Vector2)transform.position + spriteBottomLocal, Vector3.down, groundedTolerance, groundLayer);
+            RaycastHit2D underObject = Physics2D.Raycast((Vector2)transform.position , Vector3.down, groundedTolerance, groundLayer);
             //Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
             if (underObject.collider) return true;
             return false;
@@ -40,11 +44,12 @@ public class ColdSnapper : EnemyBehavior
     {
         get
         {
-            RaycastHit2D rayRightHit = Physics2D.Raycast((Vector2)transform.position + rayOffset, Vector3.down, edgeTolerance, groundLayer);
+            RaycastHit2D rayRightHit = Physics2D.Raycast((Vector2)transform.position + rayOffset , Vector3.down, edgeTolerance, groundLayer);
             if (!rayRightHit.collider) return true;
 
-            RaycastHit2D rayLeftHit = Physics2D.Raycast((Vector2)transform.position - rayOffset, Vector3.down, edgeTolerance, groundLayer);
+            RaycastHit2D rayLeftHit = Physics2D.Raycast((Vector2)transform.position - leftRayOffset , Vector3.down, edgeTolerance, groundLayer);
             if (!rayLeftHit.collider) return true;
+
             return false;
         }
     }
@@ -52,10 +57,12 @@ public class ColdSnapper : EnemyBehavior
     {
         get
         {
-            RaycastHit2D rayRightHit = Physics2D.Raycast((Vector2)transform.position + rayOffset, Vector3.right, wallTolerance);
+            RaycastHit2D rayRightHit = Physics2D.Raycast((Vector2)transform.position + rayOffset + groundOffset, Vector3.right, wallTolerance, wallLayer);
             if (rayRightHit.collider) return true;
+            
+               
 
-            RaycastHit2D rayLeftHit = Physics2D.Raycast((Vector2)transform.position - rayOffset, Vector3.left, wallTolerance);
+            RaycastHit2D rayLeftHit = Physics2D.Raycast((Vector2)transform.position - leftRayOffset + groundOffset, Vector3.left, wallTolerance,wallLayer);
             if (rayLeftHit.collider) return true;
             return false;
         }
@@ -76,19 +83,18 @@ public class ColdSnapper : EnemyBehavior
 
     public void Updatee()
     {
-        Debug.Log(IsGrounded + "is the grounding value for " + name);
         if (debug)
         {
             Debug.DrawRay((Vector2)transform.position + spriteBottomLocal, Vector3.down * groundedTolerance, Color.red);
             if(type == CSType.EDGE)
             {
                 Debug.DrawRay((Vector2)transform.position + rayOffset, Vector3.down * edgeTolerance, Color.blue);
-                Debug.DrawRay((Vector2)transform.position - rayOffset, Vector3.down * edgeTolerance, Color.blue);
+                Debug.DrawRay((Vector2)transform.position - leftRayOffset, Vector3.down * edgeTolerance, Color.blue);
             }
             else if (type == CSType.WALL)
             {
                 Debug.DrawRay((Vector2)transform.position + rayOffset, Vector3.right * wallTolerance, Color.blue);
-                Debug.DrawRay((Vector2)transform.position - rayOffset, Vector3.left * wallTolerance, Color.blue);
+                Debug.DrawRay((Vector2)transform.position - leftRayOffset, Vector3.left * wallTolerance, Color.blue);
             }
         }
 
@@ -102,6 +108,7 @@ public class ColdSnapper : EnemyBehavior
                     if (IsByEdge)
                     {
                         velocity = -velocity; // Change directions
+                        
                     }
                     break;
                 case CSType.WALL:
