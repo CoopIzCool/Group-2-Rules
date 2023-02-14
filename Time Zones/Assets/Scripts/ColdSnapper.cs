@@ -14,57 +14,52 @@ public class ColdSnapper : EnemyBehavior
     public bool debug = false;
     private EnemyState state = EnemyState.INIT;
     private Rigidbody2D rigidBody;
-    private float speed = 1.6f;
+    private float speed = 1.4f;
     private Vector2 velocity;
-    private Vector2 spriteBottomLocal;
-    private LayerMask groundLayer;
-    [SerializeField]
-    private LayerMask wallLayer;
+    private Vector2 bottomLocal;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask wallLayer;
 
     private const float groundedTolerance = 0.75f;
     private const float edgeTolerance = 0.75f; // Distance that is considered an edge/cliff
-    private const float wallTolerance = 0.2f; // Distance too a wall/object
-    private Vector2 rayOffset = new Vector3(0.8f, 0f);
-    private Vector2 leftRayOffset = new Vector2(1.1f, 0f);
+    [SerializeField][Range(0.0f,2.0f)] private float wallTolerance = 0.2f; // Distance too a wall/object
+    [SerializeField] private Vector2 centerOffset = new Vector3(0.0f, 0f);
+    private Vector2 rayOffset = new Vector3(0.9f, 0f);
     private Vector2 groundOffset = new Vector3(0f, 0.3f);
-
-    //public GameObject target;
 
     private bool IsGrounded
     {
         get
         {
-            RaycastHit2D underObject = Physics2D.Raycast((Vector2)transform.position , Vector3.down, groundedTolerance, groundLayer);
+            RaycastHit2D underObject = Physics2D.Raycast((Vector2)transform.position, Vector3.down, groundedTolerance, groundLayer);
             //Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
             if (underObject.collider) return true;
             return false;
         }
     }
-    private bool IsByEdge
+    private int IsByEdge
     {
         get
         {
-            RaycastHit2D rayRightHit = Physics2D.Raycast((Vector2)transform.position + rayOffset , Vector3.down, edgeTolerance, groundLayer);
-            if (!rayRightHit.collider) return true;
+            RaycastHit2D rayRightHit = Physics2D.Raycast((Vector2)transform.position + rayOffset, Vector3.down, edgeTolerance, groundLayer);
+            if (!rayRightHit.collider) return 1;
 
-            RaycastHit2D rayLeftHit = Physics2D.Raycast((Vector2)transform.position - leftRayOffset , Vector3.down, edgeTolerance, groundLayer);
-            if (!rayLeftHit.collider) return true;
+            RaycastHit2D rayLeftHit = Physics2D.Raycast((Vector2)transform.position - rayOffset, Vector3.down, edgeTolerance, groundLayer);
+            if (!rayLeftHit.collider) return 2;
 
-            return false;
+            return 0;
         }
     }
-    private bool IsByWall
+    private int IsByWall
     {
         get
         {
-            RaycastHit2D rayRightHit = Physics2D.Raycast((Vector2)transform.position + rayOffset + groundOffset, Vector3.right, wallTolerance, wallLayer);
-            if (rayRightHit.collider) return true;
-            
-               
+            RaycastHit2D rayRightHit = Physics2D.Raycast((Vector2)transform.position + centerOffset + rayOffset, Vector3.right, wallTolerance, wallLayer);
+            if (rayRightHit.collider) return 1;
 
-            RaycastHit2D rayLeftHit = Physics2D.Raycast((Vector2)transform.position - leftRayOffset + groundOffset, Vector3.left, wallTolerance,wallLayer);
-            if (rayLeftHit.collider) return true;
-            return false;
+            RaycastHit2D rayLeftHit = Physics2D.Raycast((Vector2)transform.position + centerOffset - rayOffset, Vector3.left, wallTolerance,wallLayer);
+            if (rayLeftHit.collider) return 2;
+            return 0;
         }
     }
 
@@ -72,29 +67,26 @@ public class ColdSnapper : EnemyBehavior
     {
         rigidBody = GetComponent<Rigidbody2D>();
         groundLayer = LayerMask.GetMask("Ground");
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
-        spriteBottomLocal.y = -sr.size.y/2;
+        //SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        BoxCollider2D collider = GetComponent<BoxCollider2D>();
+        bottomLocal.y = collider.bounds.min.y;
         velocity = new Vector2(speed, 0f);
-
-        //target = GameObject.FindGameObjectWithTag("Player");
-
-        state = EnemyState.STATIONARY;
     }
 
     public void Updatee()
     {
         if (debug)
         {
-            Debug.DrawRay((Vector2)transform.position + spriteBottomLocal, Vector3.down * groundedTolerance, Color.red);
+            Debug.DrawRay((Vector2)transform.position + bottomLocal, Vector3.down * groundedTolerance, Color.red);
             if(type == CSType.EDGE)
             {
                 Debug.DrawRay((Vector2)transform.position + rayOffset, Vector3.down * edgeTolerance, Color.blue);
-                Debug.DrawRay((Vector2)transform.position - leftRayOffset, Vector3.down * edgeTolerance, Color.blue);
+                Debug.DrawRay((Vector2)transform.position - rayOffset, Vector3.down * edgeTolerance, Color.blue);
             }
             else if (type == CSType.WALL)
             {
-                Debug.DrawRay((Vector2)transform.position + rayOffset, Vector3.right * wallTolerance, Color.blue);
-                Debug.DrawRay((Vector2)transform.position - leftRayOffset, Vector3.left * wallTolerance, Color.blue);
+                Debug.DrawRay((Vector2)transform.position + centerOffset + rayOffset, Vector3.right * wallTolerance, Color.blue);
+                Debug.DrawRay((Vector2)transform.position + centerOffset - rayOffset, Vector3.left * wallTolerance, Color.blue);
             }
         }
 
@@ -105,16 +97,19 @@ public class ColdSnapper : EnemyBehavior
             switch (type)
             {
                 case CSType.EDGE:
-                    if (IsByEdge)
+                    int isByEdge = IsByEdge;
+                    if (isByEdge > 0)
                     {
-                        velocity = -velocity; // Change directions
-                        
+                        if(isByEdge == 1) { velocity = new Vector2(-speed, 0f); }
+                        else { velocity = new Vector2(speed, 0f); }
                     }
                     break;
                 case CSType.WALL:
-                    if (IsByWall)
+                    int isBywall = IsByWall;
+                    if (isBywall > 0)
                     {
-                        velocity = -velocity; // Change directions
+                        if (isBywall == 1) { velocity = new Vector2(-speed, 0f); }
+                        else { velocity = new Vector2(speed, 0f); }
                     }
                     break;
             }

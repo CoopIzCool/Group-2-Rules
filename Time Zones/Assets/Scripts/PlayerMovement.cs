@@ -124,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
 
     internal void TeleportTo(Transform transform)
     {
-        this.transform.position = transform.position + Vector3.up * 0.5f;
+        this.transform.position = transform.position + Vector3.up * 0.2f;
     }
     internal void TeleportTo(Vector3 position)
     {

@@ -34,6 +34,7 @@ public class Engine : MonoBehaviour
                     {
                         player.GetComponent<PlayerMovement>().TeleportTo(connectedEngine.transform);
                         GameManager.ChangeLevel();
+                        GameManager.MoveCamera(connectedEngine.transform);
                     }
                 break;
                 case EngineType.WIN:
