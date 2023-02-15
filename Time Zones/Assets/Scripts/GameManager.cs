@@ -226,11 +226,13 @@ public class GameManager : MonoBehaviour
     {
         levels[0].SetActive(true);
         levels[1].SetActive(false);
+        levels[2].SetActive(false);
         pauseMenu.SetActive(false);
         mainCamera.transform.position = menuPos;
         playerScript.TeleportTo(menuPos);
         inLavaLevel = false;
         state = GameState.MAIN_MENU;
+        playerScript.gameObject.GetComponent<Animator>().speed = 1;
     }
 
     public static void ResetEnemies()
