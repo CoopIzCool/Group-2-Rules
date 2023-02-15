@@ -15,7 +15,7 @@ public class EnemyBehavior : MonoBehaviour
             Vector3 enemyBounds = gameObject.GetComponent<Collider2D>().bounds.max;
             Vector3 playerBounds = playerCollider.bounds.min;
 
-            Debug.Log(enemyBounds.y - (playerBounds.y + 0.05));
+            Debug.Log(Vector2.SignedAngle(gameObject.GetComponent<Collider2D>().bounds.center,contactPoint) * Mathf.Rad2Deg);
             if(playerBounds.y + 0.05 > enemyBounds.y)
             {
                 EnemyDeath(collision.gameObject);

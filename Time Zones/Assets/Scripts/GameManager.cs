@@ -235,7 +235,6 @@ public class GameManager : MonoBehaviour
 
     public static void ResetEnemies()
     {
-        Debug.Log("resetting");
         foreach(GameObject snapper in coldSnappers)
         {
             snapper.SetActive(true);
