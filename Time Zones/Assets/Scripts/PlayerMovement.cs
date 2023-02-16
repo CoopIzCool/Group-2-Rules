@@ -83,7 +83,38 @@ public class PlayerMovement : MonoBehaviour
 
     public void FixedUpdatee()
     {
-        rb.velocity = new Vector2(_horizontalInput * _runSpeed, rb.velocity.y);
+        if(!GameManager.OnIce())
+        {
+
+            rb.velocity = new Vector2(_horizontalInput * _runSpeed, rb.velocity.y);
+            
+        }
+        else
+        {
+            if (!IsGrounded())
+            {
+                rb.velocity = new Vector2(_horizontalInput * _runSpeed, rb.velocity.y);
+            }
+            else
+            {
+                rb.AddForce(new Vector2(_horizontalInput * _runSpeed, 0));
+                Vector2 clampedX = Vector2.ClampMagnitude(rb.velocity, _runSpeed);
+                rb.velocity = new Vector2(clampedX.x, rb.velocity.y);
+            }
+        }
+        /*
+        if (_horizontalInput != 0 || !IsGrounded())
+        {
+            rb.velocity = new Vector2(_horizontalInput * _runSpeed, rb.velocity.y);
+        }
+        else if(!GameManager.OnIce())
+        {
+            rb.velocity = new Vector2(rb.velocity.x * 0.2f, rb.velocity.y);
+        }
+        else if(!GameManager.OnIce())
+        {
+            rb.velocity = new Vector2(rb.velocity.x * 0.9f, rb.velocity.y);
+        }*/
     }
 
     private void FlipSides()

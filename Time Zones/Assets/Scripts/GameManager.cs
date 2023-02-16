@@ -282,4 +282,13 @@ public class GameManager : MonoBehaviour
         spawn.transform.position = position + new Vector3(0,1,0);
     }
 
+    public static bool OnIce()
+    {
+        if(state == GameState.MAIN_MENU)
+        {
+            return false;
+        }
+        return !inLavaLevel;
+    }
+
 }
