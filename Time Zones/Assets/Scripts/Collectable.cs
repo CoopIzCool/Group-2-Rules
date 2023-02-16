@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject targetEngine;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
             Destroy(gameObject);
-            // GameObject.Collected()
+            targetEngine.GetComponent<Engine>().EnableEngine();
+           // GameObject.Collected()
         }
     }
 }

@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     private static Vector3 menuPos;
     //private static UIManager ui;
     private static GameObject spawn;
+    private static GameObject originalSpawn;
     private static GameObject mainCamera;
 
     private static bool inLavaLevel = false;
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
     // UI
     public static GameObject pauseMenu;
     public static GameObject settingsMenu;
+    public static GameObject winText;
 
     public static GameManager Instance
     {
@@ -181,6 +183,7 @@ public class GameManager : MonoBehaviour
     public static void Win()
     {
         Debug.Log("Win");
+       // playerScript.enabled = false;
     }
     public static void Play()
     {
@@ -251,6 +254,7 @@ public class GameManager : MonoBehaviour
         inLavaLevel = false;
         state = GameState.MAIN_MENU;
         playerScript.gameObject.GetComponent<Animator>().speed = 1;
+        spawn.transform.position = originalSpawn.transform.position;
     }
 
     public static void ResetEnemies()
@@ -271,6 +275,11 @@ public class GameManager : MonoBehaviour
         Vector3 move = transform.position;
         move.y += 0.5f;
         mainCamera.transform.position = move;
+    }
+
+    public void UpdateSpawn(Vector3 position)
+    {
+        spawn.transform.position = position + new Vector3(0,1,0);
     }
 
 }

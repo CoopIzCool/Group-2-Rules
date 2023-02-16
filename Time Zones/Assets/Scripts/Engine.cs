@@ -16,6 +16,8 @@ public class Engine : MonoBehaviour
     public GameObject connectedEngine;
     private GameObject player = null;
     public GameObject interactIMG = null;
+    public GameObject winText = null;
+    public bool engineEnabled = true;
 
     private void Awake()
     {
@@ -31,6 +33,7 @@ public class Engine : MonoBehaviour
 
     protected virtual void Update()
     {
+        if(engineEnabled)
         if (player && Input.GetKeyDown(KeyCode.E))
         {
             switch (type)
@@ -43,10 +46,15 @@ public class Engine : MonoBehaviour
                         player.GetComponent<PlayerMovement>().TeleportTo(connectedEngine.transform);
                         GameManager.ChangeLevel();
                         GameManager.MoveCamera(connectedEngine.transform);
-                    }
+                            if(gameObject.transform.parent.name == "TM-World1") //This is horrible and lazy
+                                GameObject.Find("GameManager").GetComponent<GameManager>().UpdateSpawn(transform.position);
+                            else
+                                GameObject.Find("GameManager").GetComponent<GameManager>().UpdateSpawn(connectedEngine.transform.position);
+                        }
                 break;
                 case EngineType.WIN:
                     GameManager.Win();
+                    winText.SetActive(true);
                     break;
                 case EngineType.PLAY:
                     //Debug.Log("Play");
@@ -72,9 +80,7 @@ public class Engine : MonoBehaviour
             //Debug.Log("Activated Engine");
             player = collision.gameObject;
 
-            if (type == EngineType.PLAY ||
-                type == EngineType.SETTINGS ||
-                type == EngineType.QUIT)
+            if (interactIMG!= null)
             {
                 interactIMG.SetActive(true);
             }
@@ -88,12 +94,16 @@ public class Engine : MonoBehaviour
             //Debug.Log("Deactivated Engine");
             player = null;
 
-            if (type == EngineType.PLAY ||
-                type == EngineType.SETTINGS ||
-                type == EngineType.QUIT)
+            if (interactIMG!=null)
             {
                 interactIMG.SetActive(false);
             }
         }
+    }
+
+    public void EnableEngine()
+    {
+        engineEnabled = true;
+        Destroy(interactIMG);
     }
 }
