@@ -13,10 +13,13 @@ public class EnemyBehavior : MonoBehaviour
 
             Vector3 contactPoint = collision.GetContact(0).point;
             Vector3 enemyBounds = gameObject.GetComponent<Collider2D>().bounds.max;
-            Vector3 playerBounds = playerCollider.bounds.min;
+            Vector3 playerBounds = playerCollider.bounds.center;
 
-            Debug.Log(Vector2.SignedAngle(gameObject.GetComponent<Collider2D>().bounds.center,contactPoint) * Mathf.Rad2Deg);
-            if(playerBounds.y + 0.05 > enemyBounds.y)
+            Vector3 impactDirection = (playerBounds - this.gameObject.GetComponent<Collider2D>().bounds.center).normalized;
+            float angleOfImpact = Mathf.Atan2(impactDirection.y, impactDirection.x) * Mathf.Rad2Deg;
+            Debug.Log(impactDirection);
+            Debug.Log(angleOfImpact);
+            if (angleOfImpact > 45 && angleOfImpact < 135)
             {
                 EnemyDeath(collision.gameObject);
             }
