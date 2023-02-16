@@ -15,10 +15,18 @@ public class Engine : MonoBehaviour
     public EngineType type = EngineType.DEFAULT;
     public GameObject connectedEngine;
     private GameObject player = null;
+    public GameObject interactIMG = null;
 
     private void Awake()
     {
         player = null;
+        if(interactIMG && (type == EngineType.PLAY ||
+            type == EngineType.SETTINGS ||
+            type == EngineType.QUIT))
+        {
+            //interactIMG = GameObject.Find("IMG-ToInteract");
+            interactIMG.SetActive(false);
+        }
     }
 
     protected virtual void Update()
@@ -44,6 +52,10 @@ public class Engine : MonoBehaviour
                     //Debug.Log("Play");
                     GameManager.Play();
                     break;
+                case EngineType.SETTINGS:
+                    //Debug.Log("Settings");
+                    GameManager.OpenCloseSettings();
+                    break;
                 case EngineType.QUIT:
                     //Debug.Log("Quit");
                     Application.Quit(0);
@@ -57,8 +69,15 @@ public class Engine : MonoBehaviour
         //if player is within range
         if (collision.tag == "Player")
         {
-            player = collision.gameObject;
             //Debug.Log("Activated Engine");
+            player = collision.gameObject;
+
+            if (type == EngineType.PLAY ||
+                type == EngineType.SETTINGS ||
+                type == EngineType.QUIT)
+            {
+                interactIMG.SetActive(true);
+            }
         }
     }
 
@@ -66,8 +85,15 @@ public class Engine : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            player = null;
             //Debug.Log("Deactivated Engine");
+            player = null;
+
+            if (type == EngineType.PLAY ||
+                type == EngineType.SETTINGS ||
+                type == EngineType.QUIT)
+            {
+                interactIMG.SetActive(false);
+            }
         }
     }
 }

@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
 
     // UI
     public static GameObject pauseMenu;
+    public static GameObject settingsMenu;
 
     public static GameManager Instance
     {
@@ -99,7 +100,9 @@ public class GameManager : MonoBehaviour
         }
 
         pauseMenu = GameObject.Find("PauseMenu");
+        settingsMenu = GameObject.Find("SettingsMenu");
         pauseMenu.SetActive(false);
+        settingsMenu.SetActive(false);
 
         state = GameState.MAIN_MENU;
     }
@@ -204,6 +207,21 @@ public class GameManager : MonoBehaviour
         }
 
         //Time.timeScale = 0.0f; // Older jank method
+    }
+    public static void OpenCloseSettings()
+    {
+        if (state == GameState.MAIN_MENU)
+        {
+            state = GameState.PAUSE;
+            settingsMenu.SetActive(true);
+            playerScript.gameObject.GetComponent<Animator>().speed = 0;
+        }
+        else if (state == GameState.PAUSE)
+        {
+            state = GameState.MAIN_MENU;
+            settingsMenu.SetActive(false);
+            playerScript.gameObject.GetComponent<Animator>().speed = 1;
+        }
     }
     public static void Restart()
     {
