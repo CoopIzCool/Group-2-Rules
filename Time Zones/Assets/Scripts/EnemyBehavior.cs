@@ -19,7 +19,7 @@ public class EnemyBehavior : MonoBehaviour
             float angleOfImpact = Mathf.Atan2(impactDirection.y, impactDirection.x) * Mathf.Rad2Deg;
             Debug.Log(impactDirection);
             Debug.Log(angleOfImpact);
-            if (angleOfImpact > 45 && angleOfImpact < 135)
+            if (angleOfImpact > 40 && angleOfImpact < 140)
             {
                 EnemyDeath(collision.gameObject);
             }
