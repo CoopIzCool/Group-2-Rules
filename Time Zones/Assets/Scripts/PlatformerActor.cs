@@ -49,10 +49,7 @@ public class PlatformerActor : EnemyBehavior
         base.OnCollisionEnter2D(collision);
     }
 
-    protected override void EnemyDeath(GameObject Player)
-    {
-        //base.EnemyDeath(Player);
-    }
+
 
     /*protected override void EnemyDeath(GameObject Player)
     {
