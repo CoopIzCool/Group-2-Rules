@@ -53,7 +53,7 @@ public class Engine : MonoBehaviour
                         }
                 break;
                 case EngineType.WIN:
-                    GameManager.Win();
+                    GameManager.Win(gameObject);
                     winText.SetActive(true);
                     break;
                 case EngineType.PLAY:
