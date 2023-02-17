@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     //private float _bouncePower = 13.5f;
     private float _horizontalInput;
     private bool _facingRight;
+    public bool canMove = true;
     [SerializeField]
     private int health = 1;
 
@@ -30,7 +31,9 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     public void Updatee()
     {
-        _horizontalInput = Input.GetAxisRaw("Horizontal");
+        if (canMove)
+        {
+            _horizontalInput = Input.GetAxisRaw("Horizontal");
 
         Vector2 zamanVelocity = GetComponent<Rigidbody2D>().velocity;
         if (zamanVelocity.y > 0)
@@ -51,21 +54,21 @@ public class PlayerMovement : MonoBehaviour
             zamanAnimator.SetBool("downwardVel", true);
         }
 
-       if(_horizontalInput!=0 && zamanAnimator.GetBool("isGrounded"))
+        if (_horizontalInput != 0 && zamanAnimator.GetBool("isGrounded"))
             zamanAnimator.SetBool("isRunning", true);
-       else
+        else
             zamanAnimator.SetBool("isRunning", false);
-
+        
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && IsGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, _jumpPower);
         }
 
-        if((Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.UpArrow)) && rb.velocity.y > 0)
+        if ((Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.UpArrow)) && rb.velocity.y > 0)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
-
+    }
         if(_horizontalInput > 0 && !_facingRight)
         {
             FlipSides();
@@ -83,23 +86,26 @@ public class PlayerMovement : MonoBehaviour
 
     public void FixedUpdatee()
     {
-        if(!GameManager.OnIce())
+        if (canMove)
         {
-
-            rb.velocity = new Vector2(_horizontalInput * _runSpeed, rb.velocity.y);
-            
-        }
-        else
-        {
-            if (!IsGrounded())
+            if (!GameManager.OnIce())
             {
+
                 rb.velocity = new Vector2(_horizontalInput * _runSpeed, rb.velocity.y);
+
             }
             else
             {
-                rb.AddForce(new Vector2(_horizontalInput * _runSpeed, 0));
-                Vector2 clampedX = Vector2.ClampMagnitude(rb.velocity, _runSpeed);
-                rb.velocity = new Vector2(clampedX.x, rb.velocity.y);
+                if (!IsGrounded())
+                {
+                    rb.velocity = new Vector2(_horizontalInput * _runSpeed, rb.velocity.y);
+                }
+                else
+                {
+                    rb.AddForce(new Vector2(_horizontalInput * _runSpeed, 0));
+                    Vector2 clampedX = Vector2.ClampMagnitude(rb.velocity, _runSpeed);
+                    rb.velocity = new Vector2(clampedX.x, rb.velocity.y);
+                }
             }
         }
         /*

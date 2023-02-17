@@ -30,6 +30,10 @@ public class GameManager : MonoBehaviour
     public GameObject furnaceFliesContainer;
     private static GameObject[] furnaceFlies;
     private static GameObject finalEngineReference;
+    public GameObject collectiblesContainerLava;
+    private static GameObject[] collectiblesLava;
+    public GameObject collectiblesContainerIce;
+    private static GameObject[] collectiblesIce;
 
     // UI
     public static GameObject pauseMenu;
@@ -68,6 +72,7 @@ public class GameManager : MonoBehaviour
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         spawn = GameObject.FindGameObjectWithTag("Spawn");
+        originalSpawn = GameObject.Find("OriginalSpawn");
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 
         if (player)
@@ -185,12 +190,15 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Win");
         finalEngineReference = finalEngine;
-        state = GameState.PAUSE;
+        playerScript.canMove = false;
+        playerScript.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
     }
     public static void Play()
     {
+
         levels[0].SetActive(false);
         levels[1].SetActive(true);
+        //spawn.transform.position = originalSpawn.transform.position;
         playerScript.TeleportTo(spawn.transform);
         MoveCamera(spawn.transform);
         inLavaLevel = true;
@@ -240,7 +248,7 @@ public class GameManager : MonoBehaviour
         levels[1].SetActive(true);
         levels[2].SetActive(false);
         pauseMenu.SetActive(false);
-        
+        playerScript.canMove = true;
         inLavaLevel = true;
         ResetEnemies();
         //Camera.main.transform.position = playerScript.gameObject.transform.position;
@@ -251,14 +259,15 @@ public class GameManager : MonoBehaviour
     }
     public static void ToMenu()
     {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         finalEngineReference.GetComponent<Engine>().winText.SetActive(false);
         levels[0].SetActive(true);
         levels[1].SetActive(false);
         levels[2].SetActive(false);
         pauseMenu.SetActive(false);
-        spawn.transform.position = originalSpawn.transform.position;
         mainCamera.transform.position = menuPos;
         playerScript.TeleportTo(menuPos);
+        playerScript.canMove = true;
         inLavaLevel = false;
         state = GameState.MAIN_MENU;
         playerScript.gameObject.GetComponent<Animator>().speed = 1;
